@@ -1,0 +1,139 @@
+* {
+    font-family: 'Roboto', sans-serif;
+    margin: 0;
+}
+
+body {
+    background-color: #A019FF;
+}
+
+#logo-h1 img {
+    display: inline;
+    width: 150px;
+}
+#logo-h1 {
+    display: inline;
+}
+
+#navbar-superior {
+    padding: 30px;
+    margin: 0 30px;
+}
+
+#nav-intermediaria {
+    display: flex;
+    flex-direction: row;
+    justify-content: space-between;
+}
+
+#button-form {
+    color: #ffffff;
+    background-color: transparent;
+    border: 5px solid;
+    border-radius: 8px;
+    font-weight: 700;
+    cursor: pointer;
+    margin: 5px 0px 20px 15px;
+    padding: 5px 10px;
+    font-size: 18px;
+    color: #000000;
+    background-color: #FFD500;
+    border-color: #FFD500;
+
+}
+
+#nav-paragraph {
+    font-weight: 500;
+    color: #ffffff;
+    display: flex;
+    justify-content: right;
+}
+
+#main-content {
+    color: #ffffff;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    text-align: center;
+    min-height: 90vh;
+}
+
+#button-subscribe-main button, #log-in-buttons button {
+    min-width: 320px;
+    max-width: 320px;
+    color: #ffffff;
+    background-color: transparent;
+    border: 5px solid;
+    padding: 15px 70px;
+    border-radius: 10px;
+    margin-top: 5px;
+    margin-bottom: 5px;
+    font-weight: 800;
+    cursor: pointer;
+}
+
+#button-subscribe-main button {
+    font-size: 25px;
+    min-width: 400px;
+    max-width: 450px;
+    padding: 15px 70px;
+    color: #000000;
+    background-color: #FFD500;
+    border-color: #FFD500;
+}
+
+#button-subscribe-main button:hover, #button-form:hover {
+    color: #ffffff;
+    background: #ecc604;
+    border-color: #ecc604;
+}
+
+#button-login-vol button {
+    border-color: #FFA60D;
+}
+#button-login-vol button:hover {
+    background: #FFA60D;
+    color: #000000;
+}
+
+#button-login-inst button, #button-login-vol button, #button-subscribe-main button, #button-form:hover{
+    -webkit-transition: all 0.3s ease-out;
+    transition: all 0.3s ease-out;
+    
+}
+
+#button-login-inst button {
+    border-color: #1989FF;
+}
+
+#button-login-inst button:hover {
+    background: #1989FF;
+    color: #000000;
+}
+
+
+#slogan-main-content {
+    font-weight: 900;
+    font-size: 40px;
+    max-width: 70%;
+}
+
+#faua-text {
+    color: #FFD500; 
+}
+
+#underline-text {
+    text-decoration: underline;
+}
+
+.line {
+    box-sizing: border-box;
+    display: inline;
+    min-width: 80vh;
+    max-height: 2px;
+    background-color: #ffffff;
+    border-radius: 100px;
+    opacity: 30%;
+    margin: 30px 0;
+}
