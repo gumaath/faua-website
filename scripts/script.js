@@ -18,6 +18,7 @@ $.validator.addMethod("minAge", function(value, element, min) {
     
     $('#botao').click(function() {
         if ($('#FormVolunteer').validate ({
+            focusInvalid: true,
             errorClass: "is-invalid",
             errorElement:'div',
             rules: {

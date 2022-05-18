@@ -33,12 +33,12 @@
             <h3 class="title">Ficamos muito felizes de saber que gostaria de ter sua instituição conosco!</h1>
                 <h3 class="title">Antes de tudo, precisamos de alguns dados básicos...</h1>
         </div>
-        <form id="RSSFirst">
+        <form id="RSSFirst" method="post">
             <div class="mb-3">
-                <input type="text" class="form-control" id="RSSfirstName" placeholder="Nome">
+                <input type="text" class="form-control" id="RSSfirstName" placeholder="Nome" name="RSSfirstName">
             </div>
             <div class="mb-3">
-                <input type="email" class="form-control" id="RSSfirstEmail" placeholder="Email">
+                <input type="email" class="form-control" id="RSSfirstEmail" placeholder="Email" name="RSSfirstEmail">
             </div>
             <div class="form-group mb-2">
                 <small id="RSSConfirm" class="form-text">Ao clicar em Enviar, você concorda em receber e-mails relacionados a FAUA.</small>
@@ -46,7 +46,21 @@
             <input type="submit" id="instituteSubmit" value="" style="background-image: url(/assets/right-arrow.svg); border: solid 0px #000000; width:26px;" />
         </form>
     </div>
-    
+
+<?php
+include ('../Mailer.php');
+
+use Mailer\Mailer;
+if ($_REQUEST) {
+    try {
+        $email = new Mailer;
+        $email->enviaEmail($_POST['RSSfirstEmail'], $_POST['RSSfirstName']);
+    } catch (Exception $e) {
+        throw new Exception($e);
+    }
+}
+?>
+
     <script src="https://code.jquery.com/jquery-3.6.0.js" integrity="sha256-H+K7U5CnXl1h5ywQfKtSj8PCmoN9aaq30gDh27Xc0jk=" crossorigin="anonymous"></script>
     <script src="https://cdn.jsdelivr.net/npm/@popperjs/core@2.10.2/dist/umd/popper.min.js" integrity="sha384-7+zCNj/IqJ95wo16oMtfsKbZ9ccEh31eOz1HGyDuCQ6wgnyJNSYdrPa03rtR1zdB" crossorigin="anonymous"></script>
     <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.1.3/dist/js/bootstrap.min.js" integrity="sha384-QJHtvGhmr9XOIpI6YVutG+2QOK9T+ZnN4kzFN1RtK3zEFEIsxhlmWl5/YESvpZ13" crossorigin="anonymous"></script>
