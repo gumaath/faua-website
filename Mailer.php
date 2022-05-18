@@ -30,7 +30,7 @@ class Mailer {
         $mail->Port       = 587;                                    //TCP port to connect to; use 587 if you have set `SMTPSecure = PHPMailer::ENCRYPTION_STARTTLS`
 
         //Recipients
-        $mail->setFrom('gumaathbot@gmail.com', 'FAUA');
+        $mail->setFrom(Credentials::mailEmail, 'FAUA');
         $mail->addAddress($emailAddress, $fromName);     //Add a recipient        //Name is optional
 
         //Content
