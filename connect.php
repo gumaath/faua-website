@@ -1,7 +1,8 @@
 <?php 
+include_once('Credentials.php');
 try {
-    $con = new PDO("mysql:host=localhost;dbname=faua_website", "admin", "merdas123");
-    echo "Deu certo!";
+    $dbName = Credentials::dbName;
+    $con = new PDO("mysql:host=localhost;dbname={$dbName}", Credentials::dbUser, Credentials::dbPass);
 }catch(PDOException $e)
 {
   echo $e->getMessage();                         
