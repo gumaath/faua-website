@@ -4,7 +4,7 @@
 }
 
 body {
-    background-color: #A019FF;
+    background-color: #797979;
 }
 
 #logo-h1 img {
@@ -26,6 +26,13 @@ body {
     justify-content: space-between;
 }
 
+.carousel.slide .carousel-control-prev, .carousel-control-next{
+    opacity: 0;
+}
+.carousel.slide .carousel-control-prev:hover, .carousel.slide .carousel-control-next:hover{
+    opacity: 1;
+}
+
 #button-form {
     color: #ffffff;
     background-color: transparent;
@@ -39,10 +46,12 @@ body {
     color: #000000;
     background-color: #FFD500;
     border-color: #FFD500;
-
+    max-height: 47px;
 }
 
+
 #nav-paragraph {
+    margin: 0;
     font-weight: 500;
     color: #ffffff;
     display: flex;
@@ -90,10 +99,10 @@ body {
 }
 
 #button-login-vol button {
-    border-color: #FFA60D;
+    border-color: #FFD500;
 }
 #button-login-vol button:hover {
-    background: #FFA60D;
+    background: #FFD500;
     color: #000000;
 }
 
@@ -102,17 +111,17 @@ body {
     transition: all 0.3s ease-out;    
 }
 
-#button-form a {
+#button-form a, #button-login-vol a, #button-login-inst a {
     color: inherit; 
     text-decoration: inherit; 
   }
 
 #button-login-inst button {
-    border-color: #1989FF;
+    border-color: #FFA60D;
 }
 
 #button-login-inst button:hover {
-    background: #1989FF;
+    background: #FFA60D;
     color: #000000;
 }
 
@@ -158,11 +167,14 @@ body {
 
 #FormModal form input.form-control, #FormModal form select.form-select {
     background-color: #EEEEEE !important;
-    color: #5e5e5e !important;
 }
 
-#FormModal form input.form-control::placeholder, #FormModal form select.form-select {
+#FormModal form input.form-control::placeholder {
     color: #C4C4C4 !important;
+}
+
+#FormModal form select {
+    color: #5e5e5e !important;
 }
 
 a.navbar-brand {

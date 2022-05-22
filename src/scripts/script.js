@@ -30,6 +30,10 @@ $.validator.addMethod("minAge", function(value, element, min) {
                     required: true,
                     minlength: 5
                 },
+                formEmailVolunteer: {
+                    required: true,
+                    minlength: 10
+                },
                 formCPFVolunteer: {
                     required: true,
 
@@ -37,11 +41,18 @@ $.validator.addMethod("minAge", function(value, element, min) {
                 },
                 formRGVolunteer: {
                     required: true,
-                    minlength: 5
+                    minlength: 10
+                },
+                formTelVolunteer: {
+                    required: true,
+                    minlength: 11
                 },
                 BirthDateVolunteer: {
                     required: true,
                     minAge: 14
+                },
+                formEstadoVolunteer: {
+                    required: true
                 },
             },
             messages: {
@@ -53,6 +64,11 @@ $.validator.addMethod("minAge", function(value, element, min) {
                     required: "Por favor, insira seu sobrenome!",
                     minlength: "Seu nome tem que ser maior!"
                 },
+                formEmailVolunteer: {
+                    required: "Por favor, insira seu email!",
+                    minlength: "Seu email está incompleto!",
+                    email: "Este não é um endereço de email válido!"
+                },
                 formCPFVolunteer: {
                     required: "Por favor, insira seu CPF!",
                     minlength: "Seu CPF está incompleto!",
@@ -63,10 +79,18 @@ $.validator.addMethod("minAge", function(value, element, min) {
                     minlength: "Seu RG está incompleto!",
                     number: "Coloque apenas números!"
                 },
+                formTelVolunteer: {
+                    required: "Por favor, insira seu número de celular!",
+                    minlength: "Seu celular está incompleto!",
+                    number: "Coloque apenas números!"
+                },
                 BirthDateVolunteer: {
                     required: "Por favor, insira sua data de nascimento!",
                     max: "Por favor, coloque uma data de nascimento menor que a data de hoje!",
                     minAge: "Por favor, você tem que ter pelo menos 14 anos"
+                },
+                formEstadoVolunteer: {
+                    required: "Por favor, insira seu estado!",
                 },
             },
         })); {
