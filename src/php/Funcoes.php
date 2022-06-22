@@ -4,6 +4,7 @@ namespace App;
 include $_SERVER['DOCUMENT_ROOT'] . '/vendor/autoload.php';
 
 use App\Connect;
+use App\Mailer;
 
 class Funcoes {
     public static function sucessoTela() {
@@ -62,6 +63,14 @@ class Funcoes {
         $sql = "DELETE FROM tb_instituicoes where id_instituicao = {$idInstituicao}";
         $stmt = $dbcon->prepare($sql);
         $stmt->execute();
+    }
+
+    public static function enviarCandidatoInstituicao($params) {
+        $usuario = unserialize($params['dadosVolunteer']);
+        $instituicao = unserialize($params['dadosInstitute']);
+        $mail = new Mailer();
+        $mail->enviaEmail($params, $usuario['email_voluntario'], $usuario['nome_voluntario'], 'candidate-volunteer-confirm');
+        $mail->enviaEmail($params, $instituicao['email_instituicao'], $instituicao['resp_instituicao'], 'candidate-volunteer-institute-notification');
     }
     
 }

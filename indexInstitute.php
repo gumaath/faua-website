@@ -52,6 +52,9 @@
 
                 use App\Connect;
                 use App\Funcoes;
+                use App\Credentials;
+
+                $googleKey = Credentials::googleKey;
 
                 $db = new Connect();
                 $dbcon = $db->ConnectDB();
@@ -64,7 +67,7 @@
                 $sth = $dbcon->prepare("SELECT * FROM tb_tipoinstituicao");
                 $sth->execute();
                 $tipos = $sth->fetchAll();
-                $sth = $dbcon->prepare("SELECT * FROM tb_topicosinstituicao");
+                $sth = $dbcon->prepare("SELECT * FROM tb_topicosinstituicao ORDER BY nome_topico");
                 $sth->execute();
                 $topicos = $sth->fetchAll();
 
@@ -83,14 +86,14 @@
                                 <h3 class="item-box-title" style="margin-right: 10px;"><?= $dado['nome_instituicao']; ?></h3>
                                 <img src="./src/assets/location.svg" style="height: 24px;" alt="">
                                 <?php
-                                // $destino = str_replace(" ","",$dado['endereco_instituicao']);
-                                // $destino .= str_replace(" ","",$dado['cidade_instituicao']);
-                                // $destino .= str_replace(" ","",$dado['estado_instituicao']);
-                                // $origem = str_replace(" ","",$usuario['endereco']);
-                                // $origem .= str_replace(" ","",$usuario['cidade']);
-                                // $origem .= str_replace(" ","",$usuario['estado']);
-                                // $url_loc = "https://maps.googleapis.com/maps/api/distancematrix/json?origins=".$origem."&destinations=".$destino."&language=pt-br&key=AIzaSyB09nLPB6Bd8nCeOFcCdpXuzQp4hWplOTk";
-                                // $loc = json_decode(file_get_contents($url_loc), true); 
+                                $destino = str_replace(" ","",$dado['endereco_instituicao']);
+                                $destino .= str_replace(" ","",$dado['cidade_instituicao']);
+                                $destino .= str_replace(" ","",$dado['estado_instituicao']);
+                                $origem = str_replace(" ","",$usuario['endereco_usuario']);
+                                $origem .= str_replace(" ","",$usuario['cidade_usuario']);
+                                $origem .= str_replace(" ","",$usuario['estado_usuario']);
+                                $url_loc = "https://maps.googleapis.com/maps/api/distancematrix/json?origins=".$origem."&destinations=".$destino."&language=pt-br&key=$googleKey";
+                                $loc = json_decode(file_get_contents($url_loc), true); 
                                 ?>
                                 <span class="item-box-title"><?php echo $loc['rows']['0']['elements']['0']['distance']['text'] ?></span>
                             </div>

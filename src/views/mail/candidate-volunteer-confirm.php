@@ -1,11 +1,24 @@
+<?php $usuario = unserialize($params['dadosVolunteer']);?>
+<?php $instituicao = unserialize($params['dadosInstitute']);?>
 <span style="opacity: 0"> <?=$randomness?> </span>
-<h2>Olá <?= $params['nome']?>!</h2>
+<h2>Olá, <?= $usuario['nome_voluntario']?>!</h2>
 <br>
-<h2>Muito obrigado por se cadastrar em nosso site!</h2>
-<br>
-<p>Seu cadastro agora está em <b>análise</b> e logo será visto por um de nossos administradores.</p>
-<br>
-<p>O tempo de espera em média para receber uma resposta é de <b>2 dias.</b></p>
+<h4>Muito obrigado por se candidatar para instituição <?= $instituicao['nome_instituicao']?>.</h4>
+<p>Seu formulário já foi enviado para eles e eles já te conhecem!.</p>
+<p>Acreditamos que em breve eles entrarão em contato.</p>
 <hr>
 <p>Obrigado por querer fazer do mundo, um lugar melhor! :)</p>
+<br>
+<div>
+<i>Com carinho,</i>
+<i>- Equipe do FAUA.</i>
+</div>
+<br>
+<img src='cid:logo_ref' alt="" style="width: 100px;">
 <span style="opacity: 0"> <?=$randomness?> </span>
+<style>
+    * {
+        margin: 0;
+        padding: 0;
+    }
+</style>

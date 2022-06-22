@@ -63,14 +63,14 @@
     $sth->execute();
     $usuario = $sth->fetch();
 
-    // $destino = str_replace(" ","",$dadosInstituicao['endereco_instituicao']);
-    // $destino .= str_replace(" ","",$dadosInstituicao['cidade_instituicao']);
-    // $destino .= str_replace(" ","",$dadosInstituicao['estado_instituicao']);
-    // $origem = str_replace(" ","",$usuario['endereco']);
-    // $origem .= str_replace(" ","",$usuario['cidade']);
-    // $origem .= str_replace(" ","",$usuario['estado']);
-    // $url_loc = "https://maps.googleapis.com/maps/api/distancematrix/json?origins=".$origem."&destinations=".$destino."&language=pt-br&key=AIzaSyB09nLPB6Bd8nCeOFcCdpXuzQp4hWplOTk";
-    // $loc = json_decode(file_get_contents($url_loc), true); 
+    $destino = str_replace(" ", "", $dadosInstituicao['endereco_instituicao']);
+    $destino .= str_replace(" ", "", $dadosInstituicao['cidade_instituicao']);
+    $destino .= str_replace(" ", "", $dadosInstituicao['estado_instituicao']);
+    $origem = str_replace(" ", "", $usuario['endereco_voluntario']);
+    $origem .= str_replace(" ", "", $usuario['cidade_voluntario']);
+    $origem .= str_replace(" ", "", $usuario['estado_voluntario']);
+    $url_loc = "https://maps.googleapis.com/maps/api/distancematrix/json?origins=" . $origem . "&destinations=" . $destino . "&language=pt-br&key=AIzaSyB09nLPB6Bd8nCeOFcCdpXuzQp4hWplOTk";
+    $loc = json_decode(file_get_contents($url_loc), true);
 
     ?>
     <div id="main-content" style="color: black;">
@@ -81,15 +81,17 @@
             </a>
             <div class="institute-info">
                 <p>Você está se candidatando para a instituição:</p>
+                <input type="hidden" id="dadosUsuario" name="dadosUsuario" value='<?=serialize($usuario)?>'>
+                <input type="hidden" id="dadosInstituicao" name="dadosInstituicao" value='<?=serialize($dadosInstituicao)?>'>
                 <h7 class="title"><?= Funcoes::retornaTipoInstituicao($dadosInstituicao['tipo_instituicao']) ?></h7>
-                <h1 class="title"><?=$dadosInstituicao['nome_instituicao']?></h1>
+                <h1 class="title"><?= $dadosInstituicao['nome_instituicao'] ?></h1>
                 <img class="item-content-image-info" style="width: 225px; margin-bottom: 10px;" src=<?= (file_exists("../assets/img/instituicao_{$dadosInstituicao['id_instituicao']}/logo_instituicao_{$dadosInstituicao['id_instituicao']}.png") ? "../assets/img/instituicao_{$dadosInstituicao['id_instituicao']}/logo_instituicao_{$dadosInstituicao['id_instituicao']}.png" : "../assets/img/sem-foto.png") ?> alt="">
                 <p>Você pode ajudar com:</p>
-                <?php $itens = json_decode($dadosInstituicao['topicos_instituicao']);  
-                switch(count($itens)) {
-                    case 1: 
+                <?php $itens = json_decode($dadosInstituicao['topicos_instituicao']);
+                switch (count($itens)) {
+                    case 1:
                         $tamanho = '1fr;';
-                        $estilo= '';
+                        $estilo = '';
                         break;
                     case 2:
                         $tamanho = '1fr 1fr;';
@@ -101,57 +103,59 @@
                         break;
                 }
                 ?>
-                <div class="item-box-choices-volunteer" style="display: grid; grid-template-columns: <?=$tamanho?>; margin: auto;">
-                        <?php
-                        foreach ($itens as $item) { ?>
+                <div class="item-box-choices-volunteer" style="display: grid; grid-template-columns: <?= $tamanho ?>; margin: auto;">
+                    <?php
+                    foreach ($itens as $item) { ?>
                         <?php $count++; ?>
-                        <span class="item-box-choice-unique <?=$estilo?>" style="margin: 0 20px 5px 20px;">
+                        <span class="item-box-choice-unique <?= $estilo ?>" style="margin: 0 20px 5px 20px;">
                             <img src="../assets/check-item.svg" style="height: 32px; margin-right: 10px;" alt="">
-                            <span style="font-weight: 600;"><?=Funcoes::retornaTopicoInstituicao($item)?></span> 
+                            <span style="font-weight: 600;"><?= Funcoes::retornaTopicoInstituicao($item) ?></span>
                         </span>
-                        <?php } ?>
-                    </div>
-                    <hr>
-                <h6 class="title">Informações sobre a instituição <?=$dadosInstituicao['nome_instituicao']?>:</h6>
-                <div class="institute-about" style="margin: 0 20%;">
+                    <?php } ?>
+                </div>
                 <hr>
+                <h6 class="title">Informações sobre a instituição <?= $dadosInstituicao['nome_instituicao'] ?>:</h6>
+                <div class="institute-about" style="margin: 0 20%;">
+                    <hr>
                     <div class="d-flex justify-content-between">
                         <div><i class='bx bxs-right-arrow'></i><span class="title-about"> Endereço da instituição: </span></div>
-                        <span> <?=$dadosInstituicao['endereco_instituicao']?></span>
+                        <span> <?= $dadosInstituicao['endereco_instituicao'] ?></span>
                     </div>
                     <div class="d-flex justify-content-between">
                         <div><i class='bx bxs-right-arrow'></i><span class="title-about"> Cidade da instituição: </span></div>
-                        <span> <?=$dadosInstituicao['cidade_instituicao']?></span>
+                        <span> <?= $dadosInstituicao['cidade_instituicao'] ?></span>
                     </div>
                     <div class="d-flex justify-content-between">
                         <div><i class='bx bxs-right-arrow'></i><span class="title-about"> Estado da instituição: </span></div>
-                        <span> <?=$dadosInstituicao['estado_instituicao']?></span>
+                        <span> <?= $dadosInstituicao['estado_instituicao'] ?></span>
                     </div>
                     <div class="d-flex justify-content-between">
                         <div><i class='bx bxs-right-arrow'></i><span class="title-about"> Distância da instituição de seu endereço: </span></div>
-                        <span> <?php echo $loc['rows']['0']['elements']['0']['distance']['text']?></span>
+                        <span> <?php echo $loc['rows']['0']['elements']['0']['distance']['text'] ?></span>
                     </div>
                     <?php if (strlen($dadosInstituicao['cpf_cnpj_instituicao'] > 14)) { ?>
-                    <div class="d-flex justify-content-between">
-                        <div><i class='bx bxs-right-arrow'></i><span class="title-about"> CNPJ da instituição: </span></div>
-                        <span> <?=$dadosInstituicao['cpf_cnpj_instituicao']?></span>
-                    </div>
-                    <?php } else { ?> 
-                    <div class="d-flex justify-content-between">
-                        <div><i class='bx bxs-right-arrow'></i><span class="title-about"> CPF do responsável pela instituição: </span></div>
-                        <span> <?=$dadosInstituicao['cpf_cnpj_instituicao']?></span>
-                    </div>
+                        <div class="d-flex justify-content-between">
+                            <div><i class='bx bxs-right-arrow'></i><span class="title-about"> CNPJ da instituição: </span></div>
+                            <span> <?= $dadosInstituicao['cpf_cnpj_instituicao'] ?></span>
+                        </div>
+                    <?php } else { ?>
+                        <div class="d-flex justify-content-between">
+                            <div><i class='bx bxs-right-arrow'></i><span class="title-about"> CPF do responsável pela instituição: </span></div>
+                            <span> <?= $dadosInstituicao['cpf_cnpj_instituicao'] ?></span>
+                        </div>
                     <?php } ?>
                     <hr>
-                        <div style="margin-bottom: 5px;"><span class="title-about"> Descrição sobre a instituição: </span></div>
-                        <div style="border: 1px solid rgba(0,0,0,0.20); border-radius: 5px; max-width: 500px;"><p style="padding: 5px; margin: 0; text-align: left;"> <?=$dadosInstituicao['descricao_instituicao']?></p></div>
+                    <div style="margin-bottom: 5px;"><span class="title-about"> Descrição sobre a instituição: </span></div>
+                    <div style="border: 1px solid rgba(0,0,0,0.20); border-radius: 5px; max-width: 500px;">
+                        <p style="padding: 5px; margin: 0; text-align: left;"> <?= $dadosInstituicao['descricao_instituicao'] ?></p>
                     </div>
-                    <hr>
-                    <h4 class="title">Gostou da instituição e gostaria de apoia-lá?</h4>
-                    <button class="candidate-button">Candidatar-se</button>
                 </div>
+                <hr>
+                <h4 class="title">Gostou da instituição e gostaria de apoia-lá?</h4>
+                <button class="candidate-button" id="candidate-button">Candidatar-se</button>
             </div>
         </div>
+    </div>
     </div>
     <script src="https://code.jquery.com/jquery-3.6.0.js" integrity="sha256-H+K7U5CnXl1h5ywQfKtSj8PCmoN9aaq30gDh27Xc0jk=" crossorigin="anonymous"></script>
     <script src="https://cdn.jsdelivr.net/jquery.validation/1.16.0/jquery.validate.min.js"></script>
@@ -166,6 +170,24 @@
             document.cookie = 'login' + '="";-1; path=/';
             window.location.replace('./index.php')
         }
+        $(document).ready(function() {
+            $('#candidate-button').click(function() {
+            $("#candidate-button").prop("disabled", true);
+            $("#candidate-button").text("Enviando...");
+            var clickBtnValue = 'enviarCandidatoInstituicao';
+            var ajaxurl = '../php/Ajax.php';
+            var data = {
+                'action': clickBtnValue,
+                'dadosVolunteer': $('#dadosUsuario').val(),
+                'dadosInstitute': $('#dadosInstituicao').val()
+                    };
+
+                $.post(ajaxurl, data, function(response) {
+                    window.location.replace('./success-volunteer-candidate.php');
+                    $("#candidate-button").prop("disabled", false);
+                });
+            });
+        });
     </script>
 </body>
 

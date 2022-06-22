@@ -26,6 +26,9 @@ if (isset($_POST['action'])) {
         case 'removerInstituicao':
             Funcoes::removerInstituicao($_POST['institute']);
             break;
+        case 'enviarCandidatoInstituicao':
+            Funcoes::enviarCandidatoInstituicao($_POST);
+            break;
 
     }
 

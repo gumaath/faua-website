@@ -52,6 +52,8 @@
 
                 use App\Connect;
                 use App\Funcoes;
+                use App\Credentials;
+                $googleKey = Credentials::googleKey;
 
                 $db = new Connect();
                 $dbcon = $db->ConnectDB();
@@ -76,10 +78,14 @@
                                     <h3 class="item-box-title" style="margin-right: 10px;"><?= $dado['nome_instituicao']; ?></h3>
                                     <img src="./src/assets/location.svg" style="height: 24px;" alt="">
                                     <?php
-                                    // $destino = str_replace(" ","",$dado['endereco_instituicao']);
-                                    // $origem = str_replace(" ","",$usuario['endereco']);
-                                    // $url_loc = "https://maps.googleapis.com/maps/api/distancematrix/json?origins=".$origem."&destinations=".$destino."&language=pt-br&key=AIzaSyB09nLPB6Bd8nCeOFcCdpXuzQp4hWplOTk";
-                                    // $loc = json_decode(file_get_contents($url_loc), true); 
+                                    $destino = str_replace(" ","",$dado['endereco_instituicao']);
+                                    $destino .= str_replace(" ","",$dado['cidade_instituicao']);
+                                    $destino .= str_replace(" ","",$dado['estado_instituicao']);
+                                    $origem = str_replace(" ","",$usuario['endereco_voluntario']);
+                                    $origem .= str_replace(" ","",$usuario['cidade_voluntario']);
+                                    $origem .= str_replace(" ","",$usuario['estado_voluntario']);
+                                    $url_loc = "https://maps.googleapis.com/maps/api/distancematrix/json?origins=".$origem."&destinations=".$destino."&language=pt-br&key=$googleKey";
+                                    $loc = json_decode(file_get_contents($url_loc), true); 
                                     ?>
                                     <span class="item-box-title"><?php echo $loc['rows']['0']['elements']['0']['distance']['text'] ?></span>
                                 </div>
