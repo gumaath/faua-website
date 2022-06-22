@@ -17,9 +17,16 @@ if (isset($_POST['action'])) {
         case 'adicionarInstituicao':
             FormInstitute::adicionarFormInstitute($_POST);
             break;
+        case 'adicionarInstituicaoForm':
+            FormInstitute::adicionarFormInstituteForm($_POST);
+            break;
+        case 'cadastrarVoluntario':
+            FormVolunteer::cadastrarVoluntario($_POST);
+            break;
         case 'removerInstituicao':
             Funcoes::removerInstituicao($_POST['institute']);
             break;
+
     }
 
 }

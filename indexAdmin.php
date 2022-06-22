@@ -55,24 +55,44 @@
 
                 $db = new Connect();
                 $dbcon = $db->ConnectDB();
-                $sth = $dbcon->prepare("SELECT * FROM pessoa where email = '{$_COOKIE['login']}'");
+                $sth = $dbcon->prepare("SELECT * FROM tb_admins where email_usuario = '{$_COOKIE['login']}'");
                 $sth->execute();
                 $usuario = $sth->fetch();
-                $sth = $dbcon->prepare("SELECT * FROM tb_instituicoes");
+                if ($usuario['tipo_acesso'] == 'ADMINISTRADOR') {
+                $sth = $dbcon->prepare("SELECT * FROM tb_instituicoes where aprovado = '1'");
                 $sth->execute();
                 $result = $sth->fetchAll();
+                } else {
+                    $sth = $dbcon->prepare("SELECT * FROM tb_instituicoes where aprovado = '1' and id_instituicao = '{$usuario['id_instituicao']}'");
+                    $sth->execute();
+                    $result = $sth->fetchAll();
+                }
                 $sth = $dbcon->prepare("SELECT * FROM tb_tipoinstituicao");
                 $sth->execute();
                 $tipos = $sth->fetchAll();
                 $sth = $dbcon->prepare("SELECT * FROM tb_topicosinstituicao");
                 $sth->execute();
                 $topicos = $sth->fetchAll();
+                $sth = $dbcon->prepare("SELECT * FROM tb_instituicoes where aprovado = '0'");
+                $sth->execute();
+                $review = $sth->fetch();
+                $sth = $dbcon->prepare("SELECT * FROM tb_voluntarios where ativo_voluntario = '0'");
+                $sth->execute();
+                $reviewvol = $sth->fetch();
 
                 ?>
-                <h3 class="title" style="color: #505050; font-weight: 600;">PAINEL ADMINISTRADOR - ID ADMIN: <?php echo $usuario['idpessoa'] . ' - ' . $usuario['nome'] ?></h3>
+                <h3 class="title" style="color: #505050; font-weight: 600;">PAINEL ADMINISTRADOR - ID ADMIN: <?php echo $usuario['id_usuario'] . ' - ' . $usuario['nome_usuario'] ?></h3>
+                <?php if ($usuario['tipo_acesso'] == 'ADMINISTRADOR') { ?>
                 <a href="#" class="nav_link" style="font-size: 2rem; color:black;"><button class="d-flex justify-content-center" id="button-form" style="margin:auto; margin-right: 0" button data-bs-toggle="modal" data-bs-target="#FormModalInstitute" onclick="verificaInformacoesNovo(); validarFormInstituicaoNovo();">Adicionar nova instituição</button></a>
+                <?php } ?>
             </div>
             <div style="border: 1px solid rgba(0, 0, 0, 0.3); width: 50%; margin-left: 20px;"></div>
+            <?php if ($review && $usuario['tipo_acesso'] == 'ADMINISTRADOR') { ?>
+            <button class="button-admin-institute" style="margin-top: 10px;">Tem instituições para analisar!</button>
+            <?php } ?>
+            <?php if ($reviewvol && $usuario['tipo_acesso'] == 'ADMINISTRADOR') { ?>
+            <button class="button-admin-institute" style="margin-top: 10px;">Tem voluntários para aprovar!</button>
+            <?php } ?>
             <div class="content-index">
                 <?php foreach ($result as $dado) { ?>
                     <div class="d-flex justify-content-between item-content-index" style="max-height: 250px;">
@@ -150,6 +170,9 @@
                         </div>
                         <div class="mb-3">
                             <input type="text" class="form-control" id="formRespInstitute" name="formRespInstitute" placeholder="Responsável">
+                        </div>
+                        <div class="mb-3">
+                            <input type="text" class="form-control" id="formEmailInstitute" name="formEmailInstitute" placeholder="Email do Responsável">
                         </div>
                         <div class="mb-3">
                             <input type="text" class="form-control cpfOuCnpj" id="formCNPJCPFInstitute" name="formCNPJCPFInstituter" placeholder="CNPJ/CPF">
@@ -255,6 +278,9 @@
                                 <input type="text" class="form-control" id="formRespInstitute" name="formRespInstitute" placeholder="Responsável" value="<?= $dado['resp_instituicao'] ?>">
                             </div>
                             <div class="mb-3">
+                                <input type="text" class="form-control" id="formEmailInstitute" name="formEmailInstitute" placeholder="Email do Responsável" value="<?= $dado['email_instituicao'] ?>">
+                            </div>
+                            <div class="mb-3">
                                 <input type="text" class="form-control cpfOuCnpj" id="formCNPJCPFInstitute" name="formCNPJCPFInstituter" placeholder="CNPJ/CPF" value="<?= $dado['cpf_cnpj_instituicao'] ?>">
                             </div>
                             <div class="mb-3">
@@ -337,6 +363,9 @@
                                         </div>
                                     </div>
                                 <?php } ?>
+                            </div>
+                            <div class="mb-3">
+                                <textarea type="text" class="form-control" id="formDescriInstitute" name="formDescriInstitute" placeholder="Descrição da Instituição"><?=$dado['descricao_instituicao']?></textarea>
                             </div>
                     </div>
                     </form>

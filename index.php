@@ -77,10 +77,10 @@
                             <input type="text" class="form-control" id="formNomeVolunteer" name="formNomeVolunteer" placeholder="Nome">
                         </div>
                         <div class="mb-3">
-                            <input type="text" class="form-control" id="formSobrenomeVolunteer" name="formSobrenomeVolunteer" placeholder="Sobrenome">
+                            <input type="email" class="form-control" id="formEmailVolunteer" name="formEmailVolunteer" placeholder="Email">
                         </div>
                         <div class="mb-3">
-                            <input type="email" class="form-control" id="formEmailVolunteer" name="formEmailVolunteer" placeholder="Email">
+                            <input type="password" class="form-control" id="formPassVolunteer" name="formPassVolunteer" placeholder="Senha">
                         </div>
                         <div class="mb-3">
                             <input type="text" class="form-control" id="formCPFVolunteer" name="formCPFVolunteer" placeholder="CPF">
@@ -90,6 +90,9 @@
                         </div>
                         <div class="mb-3">
                             <input type="text" class="form-control" id="formTelVolunteer" name="formTelVolunteer" placeholder="Telefone">
+                        </div>
+                        <div class="mb-3">
+                            <input type="text" class="form-control" id="formEndVolunteer" name="formEndVolunteer" placeholder="Endereço">
                         </div>
                         <div class="mb-3">
                             <div class="row">
@@ -114,7 +117,7 @@
                                     </div>
                                     <div class="row">
                                         <div class="col-auto">
-                                            <select class="form-select" aria-label="Letra sangue" name="letra-sangue">
+                                            <select class="form-select" id="letra-sangue" aria-label="Letra sangue" name="letra-sangue">
                                                 <option selected value="A">A</option>
                                                 <option value="O">O</option>
                                                 <option value="B">B</option>
@@ -122,9 +125,9 @@
                                             </select>
                                         </div>
                                         <div class="col-auto" style="padding: 0;">
-                                            <select class="form-select" aria-label="Tipo Sangue" name="tipo-sangue">
-                                                <option selected value="-">Negativo</option>
-                                                <option value="+">Positivo</option>
+                                            <select class="form-select" id="tipo-sangue" aria-label="Tipo Sangue" name="tipo-sangue">
+                                                <option selected value="NEGATIVO">Negativo</option>
+                                                <option value="POSITIVO">Positivo</option>
                                             </select>
                                         </div>
                                     </div>
@@ -177,43 +180,17 @@
                 </form>
                 <div class="modal-footer">
                     <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Fechar</button>
-                    <button type="submit" id="botao" name="botao" class="btn btn-primary">Enviar</button>
+                    <button type="submit" id="botaoVolunteer" name="botaoVolunteer" onclick="validarFormVoluntario()" class="btn btn-primary">Enviar</button>
                 </div>
             </div>
         </div>
     </div>
-    <?php
-    require_once $_SERVER['DOCUMENT_ROOT'] . '/vendor/autoload.php';
-    use App\FormVolunteer;
-    use App\Funcoes;
-    use App\Mailer;
-    // Envio de formulário do voluntário e envio de email
-    if ($_REQUEST) {
-        
-        try {
-            $form = new FormVolunteer();
-            //$func = $form->enviarFormVolunteer($_POST['formEmailVolunteer'], $_POST['formNomeVolunteer']);
-            $func = true;
-            if ($func === true) {
-                $params = [
-                    "nome" => $_POST['formNomeVolunteer'],
-                    "email" => $_POST['formEmailVolunteer']
-                ];
-                $email = new Mailer;
-                $email->enviaEmail($params, $params['email'], $params['nome'], 'submit-volunteer-review', 'Uhu! Seu cadastro está em análise!');
-                var_dump("deu certo");
-            } else {
-                Funcoes::errorTela();
-            }
-        } catch (Exception $e) {
-            throw new Exception($e);
-        }
-    }
-    ?>
     <script src="https://code.jquery.com/jquery-3.6.0.js" integrity="sha256-H+K7U5CnXl1h5ywQfKtSj8PCmoN9aaq30gDh27Xc0jk=" crossorigin="anonymous"></script>
+    <script src="https://ajax.googleapis.com/ajax/libs/jqueryui/1.11.4/jquery-ui.min.js" type="text/javascript"></script>
     <script src="https://cdn.jsdelivr.net/jquery.validation/1.16.0/jquery.validate.min.js"></script>
     <script src="https://cdn.jsdelivr.net/jquery.validation/1.16.0/additional-methods.min.js"></script>
     <script src="./src/scripts/script.js"></script>
+    <script src="./src/scripts/jquery.wiggle.min.js"></script>
     <script src="./src/scripts/jquery.mask.js"></script>
     <script src="https://cdn.jsdelivr.net/npm/@popperjs/core@2.10.2/dist/umd/popper.min.js" integrity="sha384-7+zCNj/IqJ95wo16oMtfsKbZ9ccEh31eOz1HGyDuCQ6wgnyJNSYdrPa03rtR1zdB" crossorigin="anonymous"></script>
     <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.1.3/dist/js/bootstrap.min.js" integrity="sha384-QJHtvGhmr9XOIpI6YVutG+2QOK9T+ZnN4kzFN1RtK3zEFEIsxhlmWl5/YESvpZ13" crossorigin="anonymous"></script>

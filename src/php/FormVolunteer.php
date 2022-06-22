@@ -11,29 +11,26 @@ class FormVolunteer {
         
     }
 
-    public function enviarFormVolunteer($nome, $sobrenome) {
+    public static function cadastrarVoluntario($params) {
         $db = new Connect();
         $dbcon = $db->ConnectDB();
 
-    if(!isset($_POST['exp_idosos'])) {
-        $_POST['exp_idosos'] = "0"; 
+        $sql = "INSERT INTO tb_voluntarios (nome_voluntario, email_voluntario, endereco_voluntario ,senha_acesso, cpf_voluntario, rg_voluntario, tel_voluntario, estado_voluntario, cidade_voluntario, tipo_sanguineo, neg_pos, nasc_voluntario, ativo_voluntario)
+        VALUES ('{$params['nomeVolunteer']}', 
+        '{$params['emailVolunteer']}',
+        '{$params['endVolunteer']}',
+        '{$params['passVolunteer']}',
+        '{$params['cpfVolunteer']}',
+        '{$params['rgVolunteer']}',
+        '{$params['telVolunteer']}',
+        '{$params['estadoVolunteer']}',
+        '{$params['cidadeVolunteer']}',
+        '{$params['sangueVolunteer']}',
+        '{$params['tipoVolunteer']}',
+        '{$params['nascVolunteer']}',
+        0)";
+
+        $stmt = $dbcon->prepare($sql);
+        $stmt->execute();
     }
-    if(!isset($_POST['exp_criancas'])) {
-        $_POST['exp_criancas'] = "0"; 
-    }
-    if(!isset($_POST['exp_animais'])) {
-        $_POST['exp_animais'] = "0"; 
-    }
-    if(!isset($_POST['doador_sangue'])) {
-        $_POST['doador_sangue'] = "0"; 
-    }
-    $stmt = $dbcon->prepare("INSERT INTO pessoa(nome, email) VALUES('{$nome}', '{$sobrenome}')");
-    $func = $stmt->execute(); 
-    if ($func === true)
-        return true;
-    else
-        return false;
-    }    
 }
-  
-?>

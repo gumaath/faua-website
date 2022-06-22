@@ -59,7 +59,7 @@
     $sth = $dbcon->prepare("SELECT * FROM tb_instituicoes where id_instituicao = '{$_GET['id_instituicao']}'");
     $sth->execute();
     $dadosInstituicao = $sth->fetch();
-    $sth = $dbcon->prepare("SELECT * FROM pessoa where email = '{$_COOKIE['login']}'");
+    $sth = $dbcon->prepare("SELECT * FROM tb_voluntarios where email_voluntario = '{$_COOKIE['login']}'");
     $sth->execute();
     $usuario = $sth->fetch();
 

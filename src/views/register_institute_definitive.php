@@ -48,8 +48,9 @@ $topicos = $sth->fetchAll();
         <img src="../assets/logo.png" alt="" style="width: 150px; margin-bottom: 10px;">
         <h3 class="title">Preencha com os dados:</h3>
         <form action="" id="FormInstitute" method="post" novalidate>
-            <input type="hidden" name=formRespInstitute" id="formRespInstitute" value="<?= $_GET['NameResp'] ?>">
-            <input type="hidden" name=formEmailInstitute" id="formEmailInstitute" value="<?= $_GET['EmailResp'] ?>">
+            <input type="hidden" name="topicos" id="topicos" value="">
+            <input type="hidden" name="formRespInstitute" id="formRespInstitute" value="<?= $_GET['NameResp'] ?>">
+            <input type="hidden" name="formEmailInstitute" id="formEmailInstitute" value="<?= $_GET['EmailResp'] ?>">
             <div class="mb-3">
                 <input type="text" class="form-control" id="formNomeInstitute" name="formNomeInstitute" placeholder="Nome da Instituição/Causa">
             </div>
@@ -132,23 +133,10 @@ $topicos = $sth->fetchAll();
                 <?php } ?>
             </div>
             <div>
-                <button class="candidate-button" style="margin-top: 20px;" id="botaoInstituicao" onclick="defineOrdemTopicosNovo()">Enviar formulário</button>
             </div>
         </form>
+        <button class="candidate-button" style="margin-top: 20px;" id="botaoInstituicaoForm" onclick="defineOrdemTopicosNovo()">Enviar formulário</button>
     </div>
-
-    <?php
-    require_once($_SERVER['DOCUMENT_ROOT'] . '/vendor/autoload.php');
-
-    use App\Mailer;
-
-    if ($_REQUEST) {
-        try {
-        } catch (Exception $e) {
-            throw new Exception($e);
-        }
-    }
-    ?>
 
     <script src="https://code.jquery.com/jquery-3.6.0.js" integrity="sha256-H+K7U5CnXl1h5ywQfKtSj8PCmoN9aaq30gDh27Xc0jk=" crossorigin="anonymous"></script>
     <script src="https://ajax.googleapis.com/ajax/libs/jqueryui/1.11.4/jquery-ui.min.js" type="text/javascript"></script>

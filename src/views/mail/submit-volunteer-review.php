@@ -11,6 +11,7 @@
 <i>Com carinho,</i>
 <i>- Equipe do FAUA.</i>
 </div>
+<br>
 <img src='cid:logo_ref' alt="" style="width: 100px;">
 <span style="opacity: 0"> <?=$randomness?> </span>
 <style>

@@ -376,3 +376,16 @@ span.img > i.check-item {
     font-weight: 500;
 }
 
+.button-admin-institute {
+    color: #ffffff;
+    background-color: transparent;
+    border: 5px solid;
+    border-radius: 8px;
+    font-weight: 700;
+    cursor: pointer;
+    font-size: 18px;
+    background-color: #d34f3d;
+    border-color: #d34f3d;
+    max-height: 47px;
+}
+

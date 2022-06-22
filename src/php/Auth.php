@@ -6,16 +6,28 @@ use App\Connect;
 
 class Auth {
 
-    public static function verificaLogin($email, $nome) {
+    public static function verificaLogin($email, $senha) {
         $db = new Connect();
         $dbcon = $db->ConnectDB();
 
-    $stmt = $dbcon->query("SELECT * from pessoa WHERE email = '$email' AND nome = '$nome'");
+    $stmt = $dbcon->query("SELECT * from tb_voluntarios WHERE email_voluntario = '$email' AND senha_acesso = '$senha' and ativo_voluntario = 1");
     $user = $stmt->fetch();
     if ($user)
         return true;
     else
         return false;
+    }  
+
+    public static function verificaLoginAdmin($email, $senha) {
+        $db = new Connect();
+        $dbcon = $db->ConnectDB();
+
+        $stmt = $dbcon->query("SELECT * from tb_admins WHERE email_usuario = '$email' AND senha_acesso = '$senha'");
+        $user = $stmt->fetch();
+        if ($user)
+            return true;
+        else
+            return false;
     }  
 
     public static function createSession($email) {

@@ -34,10 +34,10 @@
             <h5 class="title">Faça login da sua conta:</h5>
             <form id="loginForm" method="post">
                 <div class="mb-3">
-                    <input type="text" class="form-control" id="loginEmail" placeholder="E-mail" name="RSSfirstName">
+                    <input type="email" class="form-control" id="loginEmail" placeholder="E-mail" name="loginEmail">
                 </div>
                 <div class="mb-3">
-                    <input type="email" class="form-control" id="loginPassword" placeholder="Senha" name="RSSfirstEmail">
+                    <input type="password" class="form-control" id="loginPassword" placeholder="Senha" name="loginPassword">
                 </div>
                 <div style="background: none;">
                     <input type="submit" id="instituteSubmit" value="" style="background-image: url(/src/assets/right-arrow.svg); border: solid 0px; width:26px; background-color:rgba(255,255,255,0.0)" />
@@ -54,11 +54,10 @@
 
     if ($_REQUEST) {
         try {
-            $login = $_POST['RSSfirstEmail'];
-            $nome = $_POST['RSSfirstName'];
-            $auth = Auth::verificaLogin($_POST['RSSfirstEmail'], $_POST['RSSfirstName']);
+            $login = $_POST['loginEmail'];
+            $auth = Auth::verificaLoginAdmin($_POST['loginEmail'], $_POST['loginPassword']);
             if ($auth)
-                $session = Auth::createSession($_POST['RSSfirstEmail']);
+                $session = Auth::createSession($_POST['loginEmail']);
             if ($auth && $session) {
                 setcookie('login', $login, 0, '/');
                 header("Location:../../../indexAdmin.php");

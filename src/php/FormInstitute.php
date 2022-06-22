@@ -28,7 +28,9 @@ class FormInstitute {
         tipo_instituicao = {$params['tipoinstituicao']},
         cidade_instituicao = '{$params['cidadeInstitute']}',
         estado_instituicao = '{$params['estadoInstitute']}',
-        ativo = {$params['ativo_ate']},";
+        ativo = {$params['ativo_ate']},
+        email_instituicao = '{$params['formEmailInstitute']}',
+        descricao_instituicao = '{$params['descricaoInstitute']}',";
 
         if (isset($params['dataInatInstituicao']) && $params['dataInatInstituicao'] <> "") 
             $sql .= "ativo_ate = '{$params['dataInatInstituicao']}',";
@@ -57,7 +59,7 @@ class FormInstitute {
         $topicos = explode(',',$params['topicos']);
         $topicos = json_encode($topicos);
 
-        $sql = "INSERT INTO tb_instituicoes (nome_instituicao, resp_instituicao, cpf_cnpj_instituicao, endereco_instituicao, tipo_instituicao, ativo, ativo_ate, topicos_instituicao, ativo_instituicao, cidade_instituicao, estado_instituicao)
+        $sql = "INSERT INTO tb_instituicoes (nome_instituicao, resp_instituicao, cpf_cnpj_instituicao, endereco_instituicao, tipo_instituicao, ativo, ativo_ate, topicos_instituicao, ativo_instituicao, cidade_instituicao, estado_instituicao, email_instituicao, descricao_instituicao, aprovado)
         VALUES ('{$params['formNomeInstitute']}', 
         '{$params['formRespInstitute']}',
         '{$params['formCNPJCPFInstituter']}',
@@ -68,7 +70,43 @@ class FormInstitute {
         '{$topicos}',
         1,
         '{$params['cidadeInstitute']}',
-        '{$params['estadoInstitute']}')";
+        '{$params['estadoInstitute']}',
+        '{$params['formEmailInstitute']}',
+        '{$params['descricaoInstitute']}',
+        1)";
+
+        $stmt = $dbcon->prepare($sql);
+        $stmt->execute();
+
+    }
+
+    static public function adicionarFormInstituteForm($params)
+    {
+        $db = new Connect();
+        $dbcon = $db->ConnectDB();
+    
+        $params['ativo_ate'] = (int)$params['ativo_ate'];
+
+        if (!isset($params['dataInatInstituicao']) || $params['dataInatInstituicao'] == "") 
+            $params['dataInatInstituicao'] = '1987-01-01';
+
+        $topicos = explode(',',$params['topicos']);
+        $topicos = json_encode($topicos);
+
+        $sql = "INSERT INTO tb_instituicoes (nome_instituicao, resp_instituicao, cpf_cnpj_instituicao, endereco_instituicao, tipo_instituicao, ativo, ativo_ate, topicos_instituicao, ativo_instituicao, cidade_instituicao, estado_instituicao, email_instituicao, aprovado)
+        VALUES ('{$params['formNomeInstitute']}', 
+        '{$params['formRespInstitute']}',
+        '{$params['formCNPJCPFInstituter']}',
+        '{$params['formEndInstitute']}',
+         {$params['tipoinstituicao']},
+         {$params['ativo_ate']},
+         '{$params['dataInatInstituicao']}',
+        '{$topicos}',
+        1,
+        '{$params['cidadeInstitute']}',
+        '{$params['estadoInstitute']}',
+        '{$params['formEmailInstitute']}',
+        0)";
 
         $stmt = $dbcon->prepare($sql);
         $stmt->execute();

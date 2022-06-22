@@ -55,13 +55,13 @@
 
                 $db = new Connect();
                 $dbcon = $db->ConnectDB();
-                $sth = $dbcon->prepare("SELECT * FROM pessoa where email = '{$_COOKIE['login']}'");
+                $sth = $dbcon->prepare("SELECT * FROM tb_voluntarios where email_voluntario = '{$_COOKIE['login']}'");
                 $sth->execute();
                 $usuario = $sth->fetch();
-                $sth = $dbcon->prepare("SELECT * FROM tb_instituicoes where ativo_instituicao = '1'");
+                $sth = $dbcon->prepare("SELECT * FROM tb_instituicoes where ativo_instituicao = '1' and aprovado = '1'");
                 $sth->execute();
                 $result = $sth->fetchAll(); ?>
-                <h3 class="title" style="color: #505050; font-weight: 600;">Qual boa ação vai fazer hoje, <?php echo $usuario['nome'] ?>?</h3>
+                <h3 class="title" style="color: #505050; font-weight: 600;">Qual boa ação vai fazer hoje, <?php echo $usuario['nome_voluntario'] ?>?</h3>
                 <a href="#" class="nav_link" style="font-size: 2rem; color:black;"> <i class='bx bx-filter'></i></a>
             </div>
             <div style="border: 1px solid rgba(0, 0, 0, 0.3); width: 50%; margin-left: 20px;"></div>
@@ -69,7 +69,7 @@
                 <?php foreach ($result as $dado) { ?>
                     <a href="./src/views/InstituteInfo.php?id_instituicao=<?= $dado['id_instituicao']; ?>" style="color: black;">
                         <div class="d-flex justify-content-between item-content-index">
-                            <img class="item-content-image" style="width: 225px;" src=<?php echo "./src/assets/img/instituicao_{$dado['id_instituicao']}/logo_instituicao_{$dado['id_instituicao']}.png" ?> alt="">
+                        <img class="item-content-image" style="width: 225px;" src=<?= (file_exists("./src/assets/img/instituicao_{$dado['id_instituicao']}/logo_instituicao_{$dado['id_instituicao']}.png") ? "./src/assets/img/instituicao_{$dado['id_instituicao']}/logo_instituicao_{$dado['id_instituicao']}.png" : "./src/assets/img/sem-foto.png") ?> alt="">
                             <div class="d-box item-box-index p-2" style="width: 900px; text-align:left;">
                                 <p class="type-item-box"><?= Funcoes::retornaTipoInstituicao($dado['tipo_instituicao']) ?></p>
                                 <div class="d-flex">
