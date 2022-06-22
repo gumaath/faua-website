@@ -58,13 +58,13 @@
                 <button><a href="./src/views/login.php">Acessar como voluntário</a></button>
             </div>
             <div id="button-login-inst">
-                <button><a href="./src/views/login-admin.php">Acessar como instituição/administrador</a></button>
+                <button><a href="./src/views/admin/login-admin.php">Acessar como instituição/administrador</a></button>
             </div>
         </div>
     </div>
 
     <!-- Modal -->
-    <div class="modal fade" id="FormModal" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
+    <div class="modal fade FormModal" id="FormModal" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
         <div class="modal-dialog">
             <div class="modal-content">
                 <div class="modal-header">
@@ -186,14 +186,22 @@
     require_once $_SERVER['DOCUMENT_ROOT'] . '/vendor/autoload.php';
     use App\FormVolunteer;
     use App\Funcoes;
+    use App\Mailer;
     // Envio de formulário do voluntário e envio de email
     if ($_REQUEST) {
         
         try {
             $form = new FormVolunteer();
-            $func = $form->enviarFormVolunteer($_POST['formEmailVolunteer'], $_POST['formNomeVolunteer']);
+            //$func = $form->enviarFormVolunteer($_POST['formEmailVolunteer'], $_POST['formNomeVolunteer']);
+            $func = true;
             if ($func === true) {
-                Funcoes::sucessoTela();
+                $params = [
+                    "nome" => $_POST['formNomeVolunteer'],
+                    "email" => $_POST['formEmailVolunteer']
+                ];
+                $email = new Mailer;
+                $email->enviaEmail($params, $params['email'], $params['nome'], 'submit-volunteer-review', 'Uhu! Seu cadastro está em análise!');
+                var_dump("deu certo");
             } else {
                 Funcoes::errorTela();
             }

@@ -49,12 +49,20 @@
 
     <?php
         require_once($_SERVER['DOCUMENT_ROOT'] . '/vendor/autoload.php');
-        use App\Mailer;
+        use App\Funcoes;
+        use App\Connect;
 
         if ($_REQUEST) {
             try {
-                $email = new Mailer;
-                $email->enviaEmail($_POST['RSSfirstEmail'], $_POST['RSSfirstName'], 'submit-institute-review');
+                Funcoes::proximaTela("NameResp={$_POST['RSSfirstName']}&EmailResp={$_POST['RSSfirstEmail']}", '.');
+                $db = new Connect();
+                $dbcon = $db->ConnectDB();
+                $existe_registro = $dbcon->query("SELECT * from tb_rss where email_rss = '{$_POST['RSSfirstEmail']}'")->fetch();
+                if (!$existe_registro) {
+                $dbcon->query("INSERT INTO tb_rss (nome_rss, email_rss, data_envio) VALUES ('{$_POST['RSSfirstName']}','{$_POST['RSSfirstEmail']}', now())");
+                } else {
+                    $dbcon->query("UPDATE tb_rss SET data_envio = now() WHERE email_rss = '{$_POST['RSSfirstEmail']}'");
+                }
             } catch (Exception $e) {
                 throw new Exception($e);
             }

@@ -13,7 +13,8 @@ class Connect
   {
     try {
       $dbName = Credentials::dbName;
-      return new \PDO("mysql:host=localhost;dbname={$dbName}", Credentials::dbUser, Credentials::dbPass);
+      return new \PDO("mysql:host=localhost;dbname={$dbName};charset=utf8", Credentials::dbUser, Credentials::dbPass, array(\PDO::MYSQL_ATTR_INIT_COMMAND => "SET NAMES utf8"));
+
     } catch (\PDOException $e) {
 
       return $e->getMessage();

@@ -10,8 +10,8 @@
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
     <link href="https://fonts.googleapis.com/css2?family=Roboto:wght@100;300;400;500;700;900&display=swap" rel="stylesheet">
     <link href="https://fonts.googleapis.com/css2?family=Open+Sans:wght@300;400;500;600;700;800&display=swap" rel="stylesheet">
-    <link href="../css/bootstrap.min.css" rel="stylesheet" integrity="sha384-1BmE4kWBq78iYhFldvKuhfTAU6auU8tT94WrHftjDbrCEXSU1oBoqyl2QvZ6jIW3" crossorigin="anonymous">
-    <link rel="stylesheet" href="../styles/style.css">
+    <link href="../../css/bootstrap.min.css" rel="stylesheet" integrity="sha384-1BmE4kWBq78iYhFldvKuhfTAU6auU8tT94WrHftjDbrCEXSU1oBoqyl2QvZ6jIW3" crossorigin="anonymous">
+    <link rel="stylesheet" href="../../styles/style.css">
 
 </head>
 
@@ -19,8 +19,8 @@
     <div id="navbar-superior" style="padding: 0">
         <div id="nav-intermediaria">
             <nav class="navbar navbar-light">
-                <a class="navbar-brand" href="../../index.php">
-                    <img src="../assets/back-arrow-7316.svg" width="30" height="30" class="d-inline-block align-top" alt="">
+                <a class="navbar-brand" href="../../../index.php">
+                    <img src="../../assets/back-arrow-7316.svg" width="30" height="30" class="d-inline-block align-top" alt="">
                     <span style="color: #FFF">Voltar</span>
                 </a>
             </nav>
@@ -29,7 +29,7 @@
     <div id="main-content">
         <h2 class="title">PAINEL ADMINISTRADOR</h2>
         <div class="container w-25" style="background-color: rgba(255,255,255,0.3); border-radius: 10px;">
-            <img src="../assets/logo_full_white.png" alt="" width="200">
+            <img src="../../assets/logo_full_white.png" alt="" width="200">
             <h3 class="title">Bem-vindo!</h3>
             <h5 class="title">Faça login da sua conta:</h5>
             <form id="loginForm" method="post">
@@ -47,11 +47,24 @@
     </div>
 
     <?php
-    require_once($_SERVER['DOCUMENT_ROOT'] . '/vendor/autoload.php');
+    require_once ($_SERVER['DOCUMENT_ROOT'] . '/vendor/autoload.php');
+
+    use App\Auth;
+    use App\Funcoes;
 
     if ($_REQUEST) {
         try {
-            // Código
+            $login = $_POST['RSSfirstEmail'];
+            $nome = $_POST['RSSfirstName'];
+            $auth = Auth::verificaLogin($_POST['RSSfirstEmail'], $_POST['RSSfirstName']);
+            if ($auth)
+                $session = Auth::createSession($_POST['RSSfirstEmail']);
+            if ($auth && $session) {
+                setcookie('login', $login, 0, '/');
+                header("Location:../../../indexAdmin.php");
+            } else {
+                Funcoes::errorTela("/src/views");
+            }
         } catch (Exception $e) {
             throw new Exception($e);
         }

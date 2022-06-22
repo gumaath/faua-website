@@ -10,7 +10,7 @@ use PHPMailer\PHPMailer\Exception;
 
 class Mailer {
 
-    public function enviaEmail($toEmailAddress, $toName, $bodyHTML, $mailSubject = 'E-mail da FAUA', $mailfromName = 'FAUA', $fromMail = Credentials::mailEmail) {
+    public static function enviaEmail($params, $toEmailAddress, $toName, $bodyHTML, $mailSubject = 'E-mail da FAUA', $mailfromName = 'FAUA', $fromMail = Credentials::mailEmail) {
 
     //Create an instance; passing `true` enables exceptions
     $mail = new PHPMailer(true);
@@ -25,16 +25,26 @@ class Mailer {
         $mail->Password   = Credentials::mailPass;                               //SMTP password
         $mail->SMTPSecure = PHPMailer::ENCRYPTION_STARTTLS;            //Enable implicit TLS encryption
         $mail->Port       = Credentials::mailPortSMTP;                                    //TCP port to connect to; use 587 if you have set `SMTPSecure = PHPMailer::ENCRYPTION_STARTTLS`
+        $mail->CharSet = "UTF-8"; 
+        $mail->Encoding = 'base64';
 
         //Recipients
         $mail->setFrom($fromMail, $mailfromName);
         $mail->addAddress($toEmailAddress, $toName);     //Add a recipient        //Name is optional
+        $imagem = $_SERVER['DOCUMENT_ROOT'].'/src/assets/logo.png';
+        $mail->AddEmbeddedImage($imagem, 'logo_ref');
 
         //Content
         $mail->isHTML(true);                                  //Set email format to HTML
         $mail->Subject = $mailSubject;
-        $mail->Body    = "<h1>Olá $toName</h1>";
-        $mail->Body    .= file_get_contents('../views/mail/' . $bodyHTML . '.html');
+
+        $randomness = rand(1, 900);
+        ob_start();
+        include($_SERVER['DOCUMENT_ROOT'].'/src/views/mail/'.$bodyHTML.'.php');
+        $corpoHTML = ob_get_contents();
+        ob_end_clean();
+
+        $mail->Body = $corpoHTML;
         $mail->AltBody = 'Você precisa de um email que aceite HTML para visualizar este email.';
 
         $mail->send();
