@@ -127,7 +127,6 @@
                         </div>
 
                         <div style="display:grid; align-items: center;" class="grid-content">
-                            <button style="grid-area: excluir; background: none; border: none; margin: 0; padding:0; font-weight: 600" class="excluir" data-institute="<?= $dado['id_instituicao'] ?>">EXCLUIR</button>
                             <button style="margin-bottom: 60px; grid-area: editar; border: none; background: none; font-weight: 600" onclick="defineOrdemTopicos(<?= $dado['id_instituicao'] ?>); cidadesEstados(<?= $dado['id_instituicao'] ?>); verificaInformacoes(<?= $dado['id_instituicao'] ?>); validarFormInstituicao(<?= $dado['id_instituicao'] ?>);" class="editar" data-institute="<?= $dado['id_instituicao'] ?>" data-bs-toggle="modal" data-bs-target="#FormModalEdit_<?= $dado['id_instituicao'] ?>">EDITAR</button>
                             <i style="font-size: 3rem; grid-area: flecha; margin-bottom: 60px" class='bx bx-chevron-right'></i>
                         </div>

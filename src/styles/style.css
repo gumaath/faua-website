@@ -389,3 +389,13 @@ span.img > i.check-item {
     max-height: 47px;
 }
 
+::-moz-selection { /* Code for Firefox */
+    color: rgb(255, 255, 255);
+    background: #FFD500;
+  }
+  
+  ::selection {
+    color: rgb(255, 255, 255);
+    background: #FFD500;
+  }
+

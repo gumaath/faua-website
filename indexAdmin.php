@@ -13,6 +13,9 @@
     <link href="./src/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-1BmE4kWBq78iYhFldvKuhfTAU6auU8tT94WrHftjDbrCEXSU1oBoqyl2QvZ6jIW3" crossorigin="anonymous">
     <link rel="stylesheet" href="./src/styles/style.css">
     <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/boxicons@latest/css/boxicons.min.css">
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/boxicons@latest/css/boxicons.min.css">
+    <link rel="stylesheet" href="./src/css/alertify.core.css">
+    <link rel="stylesheet" href="./src/css/alertify.bootstrap.css">
 </head>
 
 <body>
@@ -62,9 +65,9 @@
                 $sth->execute();
                 $usuario = $sth->fetch();
                 if ($usuario['tipo_acesso'] == 'ADMINISTRADOR') {
-                $sth = $dbcon->prepare("SELECT * FROM tb_instituicoes where aprovado = '1'");
-                $sth->execute();
-                $result = $sth->fetchAll();
+                    $sth = $dbcon->prepare("SELECT * FROM tb_instituicoes where aprovado = '1'");
+                    $sth->execute();
+                    $result = $sth->fetchAll();
                 } else {
                     $sth = $dbcon->prepare("SELECT * FROM tb_instituicoes where aprovado = '1' and id_instituicao = '{$usuario['id_instituicao']}'");
                     $sth->execute();
@@ -86,15 +89,15 @@
                 ?>
                 <h3 class="title" style="color: #505050; font-weight: 600;">PAINEL ADMINISTRADOR - ID ADMIN: <?php echo $usuario['id_usuario'] . ' - ' . $usuario['nome_usuario'] ?></h3>
                 <?php if ($usuario['tipo_acesso'] == 'ADMINISTRADOR') { ?>
-                <a href="#" class="nav_link" style="font-size: 2rem; color:black;"><button class="d-flex justify-content-center" id="button-form" style="margin:auto; margin-right: 0" button data-bs-toggle="modal" data-bs-target="#FormModalInstitute" onclick="verificaInformacoesNovo(); validarFormInstituicaoNovo();">Adicionar nova instituição</button></a>
+                    <a href="#" class="nav_link" style="font-size: 2rem; color:black;"><button class="d-flex justify-content-center" id="button-form" style="margin:auto; margin-right: 0" button data-bs-toggle="modal" data-bs-target="#FormModalInstitute" onclick="verificaInformacoesNovo(); validarFormInstituicaoNovo();">Adicionar nova instituição</button></a>
                 <?php } ?>
             </div>
             <div style="border: 1px solid rgba(0, 0, 0, 0.3); width: 50%; margin-left: 20px;"></div>
             <?php if ($review && $usuario['tipo_acesso'] == 'ADMINISTRADOR') { ?>
-            <button class="button-admin-institute" style="margin-top: 10px;">Tem instituições para analisar!</button>
+                <button class="button-admin-institute" style="margin-top: 10px;">Tem instituições para analisar!</button>
             <?php } ?>
             <?php if ($reviewvol && $usuario['tipo_acesso'] == 'ADMINISTRADOR') { ?>
-            <button class="button-admin-institute" style="margin-top: 10px;">Tem voluntários para aprovar!</button>
+                <button class="button-admin-institute" style="margin-top: 10px;">Tem voluntários para aprovar!</button>
             <?php } ?>
             <div class="content-index">
                 <?php foreach ($result as $dado) { ?>
@@ -106,14 +109,14 @@
                                 <h3 class="item-box-title" style="margin-right: 10px;"><?= $dado['nome_instituicao']; ?></h3>
                                 <img src="./src/assets/location.svg" style="height: 24px;" alt="">
                                 <?php
-                                $destino = str_replace(" ","",$dado['endereco_instituicao']);
-                                $destino .= str_replace(" ","",$dado['cidade_instituicao']);
-                                $destino .= str_replace(" ","",$dado['estado_instituicao']);
-                                $origem = str_replace(" ","",$usuario['endereco_usuario']);
-                                $origem .= str_replace(" ","",$usuario['cidade_usuario']);
-                                $origem .= str_replace(" ","",$usuario['estado_usuario']);
-                                $url_loc = "https://maps.googleapis.com/maps/api/distancematrix/json?origins=".$origem."&destinations=".$destino."&language=pt-br&key=$googleKey";
-                                $loc = json_decode(file_get_contents($url_loc), true); 
+                                $destino = str_replace(" ", "", $dado['endereco_instituicao']);
+                                $destino .= str_replace(" ", "", $dado['cidade_instituicao']);
+                                $destino .= str_replace(" ", "", $dado['estado_instituicao']);
+                                $origem = str_replace(" ", "", $usuario['endereco_usuario']);
+                                $origem .= str_replace(" ", "", $usuario['cidade_usuario']);
+                                $origem .= str_replace(" ", "", $usuario['estado_usuario']);
+                                $url_loc = "https://maps.googleapis.com/maps/api/distancematrix/json?origins=" . $origem . "&destinations=" . $destino . "&language=pt-br&key=$googleKey";
+                                $loc = json_decode(file_get_contents($url_loc), true);
                                 ?>
                                 <span class="item-box-title"><?php echo $loc['rows']['0']['elements']['0']['distance']['text'] ?></span>
                             </div>
@@ -368,7 +371,7 @@
                                 <?php } ?>
                             </div>
                             <div class="mb-3">
-                                <textarea type="text" class="form-control" id="formDescriInstitute" name="formDescriInstitute" placeholder="Descrição da Instituição"><?=$dado['descricao_instituicao']?></textarea>
+                                <textarea type="text" class="form-control" id="formDescriInstitute" name="formDescriInstitute" placeholder="Descrição da Instituição"><?= $dado['descricao_instituicao'] ?></textarea>
                             </div>
                     </div>
                     </form>
@@ -418,6 +421,7 @@
     <script src="https://cdn.jsdelivr.net/jquery.validation/1.16.0/jquery.validate.min.js"></script>
     <script src="https://cdn.jsdelivr.net/jquery.validation/1.16.0/additional-methods.min.js"></script>
     <script src="./src/scripts/script.js"></script>
+    <script src="./src/scripts/alertify.js"></script>
     <script src="./src/scripts/jquery.wiggle.min.js"></script>
     <script src="./src/scripts/jquery.mask.js"></script>
     <script src="https://cdn.jsdelivr.net/npm/@popperjs/core@2.10.2/dist/umd/popper.min.js" integrity="sha384-7+zCNj/IqJ95wo16oMtfsKbZ9ccEh31eOz1HGyDuCQ6wgnyJNSYdrPa03rtR1zdB" crossorigin="anonymous"></script>
@@ -612,17 +616,32 @@
                     location.reload();
                 });
             });
+
+            alertify.set({
+                labels: {
+                    ok: "Excluir",
+                    cancel: "Cancelar"
+                }
+            });
             $('.excluir').click(function() {
-                if (confirm("Deseja excluir a instituição?") == true) {
-                    var ajaxurl = './src/php/Ajax.php',
-                        data = {
-                            'action': 'removerInstituicao',
-                            'institute': this.getAttribute('data-institute'),
-                        };
-                    $.post(ajaxurl, data, function(response) {
-                        location.reload();
-                    });
-                };
+                instituicao = this.getAttribute('data-institute')
+                alertify.confirm("Tem certeza que quer excluir esta instituição?", function(e) {
+                    if (e) {
+                        var ajaxurl = './src/php/Ajax.php',
+                            data = {
+                                'action': 'removerInstituicao',
+                                'institute': instituicao,
+                            };
+                        $.post(ajaxurl, data, function(response) {
+                            alertify.success("Removida com sucesso.");
+                            setTimeout(() => {
+                                location.reload();
+                            }, "2000")
+                        });
+                    } else {
+                        alertify.error("Ação cancelada.");
+                    }
+                });
             });
         });
 
